@@ -1,35 +1,36 @@
 //@flow
 
 import React from 'react'
-import {Button, Text, View} from 'react-native'
-import {addBday} from './reducer'
+import {Button, Text, View, StyleSheet, FlatList} from 'react-native'
 import {connect} from 'react-redux'
-import { FlatList } from 'react-native-gesture-handler';
+import FlatListItem from './FlatListItem'
+import { deleteBday } from './action'
+import styles from './HomeScreenStyles'
  
 class HomeScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
         headerRight: (
             <Button
-            onPress={() => navigation.navigate('MyModal')}
-            title="Add"
-            color="black"
+                onPress={() => navigation.navigate('MyModal')}
+                title="Add"
+                color="white"
             />
         ),
         }
     }
 
-    renderItems = () => {
-        return this.props.bdays.map(bday => <Text key={bday.id}> {bday.day} </Text>)
-    }
-
     render() {
-        console.log(this.props)
         return (
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Text>{this.renderItems()}</Text>
+        <View style={styles.container}>
+            <FlatList
+                style={styles.flatList}
+                data={this.props.bdays}
+                renderItem={({item}) => <FlatListItem day={item.day} onDeleteClick={this.props.onDeleteClick}/>}
+                keyExtractor={item => item.id}
+            />
         </View>
-        );
+        )
     }
 }
 
@@ -39,4 +40,12 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(HomeScreen)
+const mapDispatchToProps = dispatch => {
+    return {
+      onDeleteClick: day => {
+        dispatch(deleteBday(day))
+      }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

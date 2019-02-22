@@ -1,4 +1,4 @@
-// reducers
+// reducers for adding and deleting bdays
 
 export default function reducer(state = [], action) {
     switch(action.type) {

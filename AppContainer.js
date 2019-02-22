@@ -11,25 +11,15 @@ const AppNavigator = createStackNavigator(
       MyModal: ModalScreen
     },
     {
-      initialRouteName: 'Home'
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: 'rgb(150,150,150)',
+        },
+        headerTintColor: '#fff',
+      },
+      initialRouteName: 'Home',
     }
 );
   
 const AppContainer = createAppContainer(AppNavigator);
 export default AppContainer
-
-// const mapStateToProps = state => {
-//     return {
-//       bdays: state[0]
-//     }
-//   }
-  
-// const mapDispatchToProps = dispatch => {
-//     return {
-//       onTodoClick: day => {
-//         dispatch(addBday(day))
-//       }
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)

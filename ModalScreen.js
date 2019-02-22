@@ -1,12 +1,13 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
 	StyleSheet, View, Text, TouchableOpacity, Button, TextInput
-} from 'react-native';
+} from 'react-native'
 import {NavigationScreenProp} from 'react-navigation'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import {addBday} from './action'
+import styles from './ModalScreenStyles'
 
 type State = {
 	name: string;
@@ -19,15 +20,16 @@ type Props = {
 
 class ModalScreen extends Component<Props, State> {
   constructor(props: Props){
-		super(props);
-		this.state = {
-			name: '',
-		};
+      super(props)
+      this.state = {
+        name: '',
+      };
     }
     
     handleSubmit = () => {
         if(this.state.name.trim() === '') {
-          return;
+          alert('Oops you tried to enter an empty bday')
+          return
         }
         this.props.onSaveClick(this.state.name)
         this.props.navigation.goBack()
@@ -42,49 +44,16 @@ class ModalScreen extends Component<Props, State> {
                     console.log(this.state.name)
                 }}
             />
-            <Button
+            <TouchableOpacity
                 onPress={this.handleSubmit}
-                title="Save"
-                accessibilityLabel="Click to save"
-            />
+                style={styles.button}
+            >
+              <Text style={styles.textLabel}>Save</Text>
+            </TouchableOpacity>
         </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-	container:{
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	textInput:{
-		height: 40,
-		borderColor: 'white',
-		borderWidth: 0,
-		fontFamily: 'GillSans',
-		fontSize: 30,
-	},
-	button:{
-		backgroundColor: 'rgb(100,100,100)',
-		padding: 10,
-		marginTop: 15,
-		marginLeft: 15,
-		width: 100,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	textLabel:{
-		color: 'white',
-		fontSize: 21,
-		fontFamily: 'GillSans',
-	},
-	flatList: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-});
 
 const mapStateToProps = state => {
     return {
