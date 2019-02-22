@@ -4622,6 +4622,11 @@ react-native-gesture-handler@^1.0.15, react-native-gesture-handler@~1.0.14:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-push-notifications@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-push-notifications/-/react-native-push-notifications-3.0.10.tgz#928f54070a96f12d1980cf074d221675e84faab7"
+  integrity sha512-VuVNkfQq0Hr9FTPQw01y4MtjLRqmq48p828+lXvhMwFC2gDMDHUzS1dxR3KgOPPUu1qcpXgB0IHbH50voeS9Pw==
+
 react-native-safe-area-view@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.12.0.tgz#5c312f087300ecf82e8541c3eac25d560e147f22"
