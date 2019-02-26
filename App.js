@@ -16,6 +16,7 @@ import AppContainer from './AppContainer'
 import PushController from './PushController'
 import {AppState, Platform} from 'react-native'
 import PushNotification from 'react-native-push-notifications'
+import getLunarDate from './getLunarDay'
 
 const store = createStore(reducer)
 
@@ -30,7 +31,7 @@ store.dispatch(deleteBday('12-02'))
 store.dispatch(addBday('01-15'))
 store.dispatch(deleteBday('11-01'))
 store.dispatch(addBday('02-26'))
-  
+
 export default class App extends React.Component {
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange);
@@ -41,9 +42,11 @@ export default class App extends React.Component {
   }
 
   handleAppStateChange(appState) {
-    let todayISO = new Date(Date.now()).toISOString()
-    let todaySplit = todayISO.split('T')[0].substring(5)
-    const todayBday = store.getState().filter(item => item.day === todaySplit)
+    const lunarToday = getLunarDate.methods.solar2lunar(new Date(Date.now()))
+    
+    // TODO: check for a week and a day earlier too which needs an array of number of days in month
+    
+    const todayBday = store.getState().filter(item => item.day === lunarToday.dayTxt)
     if (todayBday.length) {
       // works but sometimes shows notification when you go into app, not outside it
       PushNotification.localNotification({
