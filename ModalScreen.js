@@ -38,7 +38,7 @@ class ModalScreen extends Component<Props, State> {
   render() {
     return (
         <View style={styles.container}>
-            <TextInput style={styles.textInput} placeholder="DD-MM" autoCorrect={false} 
+            <TextInput style={styles.textInput} placeholder="MM-DD" autoCorrect={false} 
                 onChangeText={(text) => {
                     this.setState({name: text})
                     console.log(this.state.name)
