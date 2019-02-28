@@ -1,8 +1,9 @@
-// reducers for adding and deleting bdays
+// reducers for adding/editing and deleting bdays
 
 export default function reducer(state = [], action) {
     switch(action.type) {
       case 'ADD' :
+        state = state.filter(item => item.id != action.id)
         return [
           ...state,
           {
@@ -12,9 +13,7 @@ export default function reducer(state = [], action) {
           }
         ]
       case 'DELETE' :
-        // may want to filter by id instead? 
-        // Cos otherwise, gets rid of birthdays of everyone who have same bday
-        return state.filter(item => item.day != action.day)
+        return state.filter(item => item.id != action.id)
       default:
         return state
     }

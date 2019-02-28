@@ -3,15 +3,12 @@ import {
 	StyleSheet, View, Text, TouchableOpacity, Alert
 } from 'react-native'
 import Swipeout from 'react-native-swipeout'
-import { deleteBday } from './action'
 
 let FlatListItem = props => {
-  const {day, onDeleteClick} = props
+  const {day, name, id, onDeleteClick, navigation} = props
 
   showEditModal = () => {
-    popupDialogComponent.showDialogComponentForUpdate({
-      id, name
-    });
+    navigation.navigate('MyModal', {id, day, name})
   }
 
   showDeleteConfirmation = () => {
@@ -26,7 +23,7 @@ let FlatListItem = props => {
         },
         {
           text: 'Yes', onPress: () => {
-            onDeleteClick(day)
+            onDeleteClick(id)
           }
         },
       ],
@@ -34,6 +31,7 @@ let FlatListItem = props => {
     );
   };
 
+  // TODO: tidy styling
   return (
     <Swipeout right={[
       {
@@ -42,9 +40,10 @@ let FlatListItem = props => {
         onPress: showDeleteConfirmation
       },
     ]} autoClose={true}>
-      <TouchableOpacity>
-        <View style={{backgroundColor: 'white', borderBottomWidth: 0.5, borderColor: 'rgb(200,200,200)', flex: 1}}>
-          <Text style={{fontFamily: 'Arial', fontSize: 21, padding: 20, color: 'rgb(120,120,120)'}}>{day}</Text>
+      <TouchableOpacity onPress={showEditModal}>
+        <View style={{backgroundColor: 'white', borderBottomWidth: 0.5, borderColor: 'rgb(200,200,200)', flex: 1, flexDirection: 'row'}}>
+          <Text style={{fontFamily: 'Arial', fontSize: 21, paddingVertical: 20, paddingLeft: 20, color: 'rgb(120,120,120)', fontWeight: 'bold'}}>{name}</Text>
+          <Text style={{fontFamily: 'Arial', fontSize: 21, paddingVertical: 20, paddingLeft: 10, color: 'rgb(120,120,120)'}}>{day}</Text>
         </View>
       </TouchableOpacity>
     </Swipeout>

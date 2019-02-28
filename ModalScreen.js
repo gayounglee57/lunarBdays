@@ -11,7 +11,8 @@ import styles from './ModalScreenStyles'
 
 type State = {
   day: string,
-  name: string
+  name: string,
+  id: number
 }
 
 type Props = {
@@ -25,30 +26,36 @@ class ModalScreen extends Component<Props, State> {
       this.state = {
         day: '',
         name: '',
+        id: 0,
       };
     }
     
     handleSubmit = () => {
-        if(this.state.day.trim() === '') {
+        if(this.state.day.trim() === '' || this.state.name.trim() === '') {
           alert('Oops you tried to enter an empty bday')
           return
         }
-        this.props.onSaveClick(this.state.name, this.state.day)
+        this.props.onSaveClick(this.state.name, this.state.day, this.state.id)
         this.props.navigation.goBack()
     }
 
   render() {
+    const id = this.props.navigation.getParam('id', 0)
+    const day = this.props.navigation.getParam('day', 'NO-DAY')
+    const name = this.props.navigation.getParam('name', 'NO-NAME')
+
     return (
         <View style={styles.container}>
-            <TextInput style={styles.textInput} placeholder="Name" autoCorrect={false} 
+            <TextInput style={styles.textInput} placeholder={id === 0 ? 'Whose birthday?' : name} autoCorrect={false} 
                 onChangeText={(text) => {
                     this.setState({name: text})
-                    console.log(this.state.name)
+                    this.setState({id})
                 }}
             />
-            <TextInput style={styles.textInput} placeholder="MM-DD" autoCorrect={false} 
+            <TextInput style={styles.textInput} placeholder={id === 0 ? 'MM-DD' : day} autoCorrect={false} 
                 onChangeText={(text) => {
                     this.setState({day: text})
+                    this.setState({id})
                 }}
             />
             <TouchableOpacity
@@ -70,8 +77,8 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = dispatch => {
     return {
-      onSaveClick: (name, day) => {
-        dispatch(addBday(name, day))
+      onSaveClick: (name, day, id) => {
+        dispatch(addBday(name, day, id))
       }
     }
 }
