@@ -16,7 +16,7 @@ let FlatListItem = props => {
 
   showDeleteConfirmation = () => {
     Alert.alert(
-      'Delete the bucket list item?',
+      'Delete the lunar birthday?',
       'Just double checking!',
       [
         {

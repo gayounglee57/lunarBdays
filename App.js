@@ -1,7 +1,4 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
  * @format
  * @flow
  * @lint-ignore-every XPLATJSCOPYRIGHT1
@@ -25,12 +22,26 @@ const store = createStore(reducer)
 const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
 // Dispatch some actions
-store.dispatch(addBday('11-01'))
-store.dispatch(addBday('12-02'))
-store.dispatch(deleteBday('12-02'))
-store.dispatch(addBday('01-15'))
-store.dispatch(deleteBday('11-01'))
-store.dispatch(addBday('02-26'))
+store.dispatch(addBday('11-1'))
+store.dispatch(addBday('12-2'))
+store.dispatch(deleteBday('12-2'))
+store.dispatch(addBday('1-25'))
+store.dispatch(deleteBday('11-1'))
+store.dispatch(addBday('1-24'))
+store.dispatch(addBday('1-31'))
+
+function parseDate(str) {
+  var ymd = str.split('-');
+  return new Date(parseInt(ymd[0]), parseInt(ymd[1]) - 1, parseInt(ymd[2]))
+}
+
+function datediff(first, second) {
+  // Take the difference between the dates and divide by milliseconds per day.
+  // Round to nearest whole number to deal with DST.
+  return Math.abs(Math.round((second-first)/(1000*60*60*24)));
+}
+
+console.log(datediff(parseDate('2019-1-26'), parseDate('2019-1-25')))
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -42,16 +53,36 @@ export default class App extends React.Component {
   }
 
   handleAppStateChange(appState) {
-    const lunarToday = getLunarDate.methods.solar2lunar(new Date(Date.now()))
-    
-    // TODO: check for a week and a day earlier too which needs an array of number of days in month
-    
-    const todayBday = store.getState().filter(item => item.day === lunarToday.dayTxt)
-    if (todayBday.length) {
-      // works but sometimes shows notification when you go into app, not outside it
-      PushNotification.localNotification({
-        message: "It's someone's bday in moonland!"
-      })
+    // only working when debug remotely??? if there are if statements around the push notification it seems...
+    // nope, something to do with Date and different JS execution contexts for device vs browser!
+    if (appState === 'background') {
+      const lunarTodayObj = getLunarDate.methods.solar2lunar(new Date(Date.now()))
+      const lunarToday = lunarTodayObj.day
+      const storeState = store.getState()
+      
+      for (let i = 0; i < storeState.length; i++) {
+        const lunarBdayFull = lunarToday.substring(0,4) + "-" + storeState[i].day
+        const diffDays = datediff(parseDate(lunarBdayFull), parseDate(lunarToday))
+        console.log(`${diffDays} diffDays`)
+        switch(diffDays) {
+          case 7:
+            PushNotification.localNotification({
+              message: "It's someone's bday in a week (in moonland)"
+            })
+            break
+          case 1:
+            PushNotification.localNotification({
+              message: "It's someone's bday tomorrow!"
+            })
+            break
+          case 0:
+            PushNotification.localNotification({
+              message: "It's someone's bday today! (in moonland)"
+            })
+          default:
+            // code block
+        }
+      }
     }
   }
 
