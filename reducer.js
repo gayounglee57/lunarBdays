@@ -7,6 +7,7 @@ export default function reducer(state = [], action) {
           ...state,
           {
             id: action.id,
+            name: action.name,
             day: action.day,
           }
         ]

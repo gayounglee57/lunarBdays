@@ -22,13 +22,13 @@ const store = createStore(reducer)
 const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
 // Dispatch some actions
-store.dispatch(addBday('11-1'))
-store.dispatch(addBday('12-2'))
-store.dispatch(deleteBday('12-2'))
-store.dispatch(addBday('1-25'))
-store.dispatch(deleteBday('11-1'))
-store.dispatch(addBday('1-24'))
-store.dispatch(addBday('1-31'))
+store.dispatch(addBday('Mine', '11-1'))
+store.dispatch(addBday('Hi', '12-2'))
+store.dispatch(deleteBday('Hi', '12-2'))
+store.dispatch(addBday('In a day', '1-25'))
+store.dispatch(deleteBday('Mine', '11-1'))
+store.dispatch(addBday('Today', '1-24'))
+store.dispatch(addBday('In a week', '1-31'))
 
 function parseDate(str) {
   var ymd = str.split('-');
@@ -63,7 +63,6 @@ export default class App extends React.Component {
       for (let i = 0; i < storeState.length; i++) {
         const lunarBdayFull = lunarToday.substring(0,4) + "-" + storeState[i].day
         const diffDays = datediff(parseDate(lunarBdayFull), parseDate(lunarToday))
-        console.log(`${diffDays} diffDays`)
         switch(diffDays) {
           case 7:
             PushNotification.localNotification({

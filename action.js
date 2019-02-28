@@ -1,8 +1,8 @@
 // action creators
 let id = 0
-export function addBday(day) {
+export function addBday(name, day) {
     id += 1
-    return { type: 'ADD', id, day}
+    return { type: 'ADD', id, name, day}
 }
 
 export function deleteBday(day) {

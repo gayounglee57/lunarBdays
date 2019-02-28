@@ -10,7 +10,8 @@ import {addBday} from './action'
 import styles from './ModalScreenStyles'
 
 type State = {
-	day: string;
+  day: string,
+  name: string
 }
 
 type Props = {
@@ -23,6 +24,7 @@ class ModalScreen extends Component<Props, State> {
       super(props)
       this.state = {
         day: '',
+        name: '',
       };
     }
     
@@ -31,13 +33,19 @@ class ModalScreen extends Component<Props, State> {
           alert('Oops you tried to enter an empty bday')
           return
         }
-        this.props.onSaveClick(this.state.day)
+        this.props.onSaveClick(this.state.name, this.state.day)
         this.props.navigation.goBack()
     }
 
   render() {
     return (
         <View style={styles.container}>
+            <TextInput style={styles.textInput} placeholder="Name" autoCorrect={false} 
+                onChangeText={(text) => {
+                    this.setState({name: text})
+                    console.log(this.state.name)
+                }}
+            />
             <TextInput style={styles.textInput} placeholder="MM-DD" autoCorrect={false} 
                 onChangeText={(text) => {
                     this.setState({day: text})
@@ -62,8 +70,8 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = dispatch => {
     return {
-      onSaveClick: day => {
-        dispatch(addBday(day))
+      onSaveClick: (name, day) => {
+        dispatch(addBday(name, day))
       }
     }
 }
