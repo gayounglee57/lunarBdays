@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react'
 import {
-	StyleSheet, View, Text, TouchableOpacity, Button, TextInput
+	View, Text, TouchableOpacity, TextInput
 } from 'react-native'
 import {NavigationScreenProp} from 'react-navigation'
 import { connect } from 'react-redux'
-import {addBday} from './action'
+import {addBday} from '../services/action'
 import styles from './ModalScreenStyles'
 
 type State = {

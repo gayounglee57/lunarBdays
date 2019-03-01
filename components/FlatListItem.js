@@ -1,8 +1,9 @@
 import React from 'react'
 import {
-	StyleSheet, View, Text, TouchableOpacity, Alert
+	View, Text, TouchableOpacity, Alert
 } from 'react-native'
 import Swipeout from 'react-native-swipeout'
+import styles from './FlatListItemStyles'
 
 let FlatListItem = props => {
   const {day, name, id, onDeleteClick, navigation} = props
@@ -31,7 +32,6 @@ let FlatListItem = props => {
     );
   };
 
-  // TODO: tidy styling
   return (
     <Swipeout right={[
       {
@@ -41,9 +41,9 @@ let FlatListItem = props => {
       },
     ]} autoClose={true}>
       <TouchableOpacity onPress={showEditModal}>
-        <View style={{backgroundColor: 'white', borderBottomWidth: 0.5, borderColor: 'rgb(200,200,200)', flex: 1, flexDirection: 'row'}}>
-          <Text style={{fontFamily: 'Arial', fontSize: 21, paddingVertical: 20, paddingLeft: 20, color: 'rgb(120,120,120)', fontWeight: 'bold'}}>{name}</Text>
-          <Text style={{fontFamily: 'Arial', fontSize: 21, paddingVertical: 20, paddingLeft: 10, color: 'rgb(120,120,120)'}}>{day}</Text>
+        <View style={styles.container}>
+          <Text style={[styles.flatList, styles.flatListName]}>{name}</Text>
+          <Text style={[styles.flatList, styles.flatListDay]}>{day}</Text>
         </View>
       </TouchableOpacity>
     </Swipeout>

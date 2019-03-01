@@ -1,10 +1,10 @@
 //@flow
 
 import React from 'react'
-import {Button, Text, View, Alert, FlatList} from 'react-native'
+import {Button, View, FlatList} from 'react-native'
 import {connect} from 'react-redux'
-import FlatListItem from './FlatListItem'
-import { deleteBday } from './action'
+import FlatListItem from '../components/FlatListItem'
+import { deleteBday } from '../services/action'
 import styles from './HomeScreenStyles'
  
 class HomeScreen extends React.Component {

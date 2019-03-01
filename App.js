@@ -6,14 +6,13 @@
 
 import React from 'react'
 import { createStore } from 'redux'
-import reducer from './reducer'
+import reducer from './services/reducer'
 import { Provider } from 'react-redux'
-import { addBday, deleteBday } from './action'
-import AppContainer from './AppContainer'
-import PushController from './PushController'
-import {AppState, Platform} from 'react-native'
+import AppContainer from './components/AppContainer'
+import PushController from './components/PushController'
+import { AppState } from 'react-native'
 import PushNotification from 'react-native-push-notifications'
-import getLunarDate from './getLunarDay'
+import getLunarDate from './services/getLunarDay'
 
 const store = createStore(reducer)
 

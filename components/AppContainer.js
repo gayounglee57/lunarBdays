@@ -1,7 +1,7 @@
 // @flow
 import {createStackNavigator, createAppContainer} from 'react-navigation'
-import HomeScreen from './HomeScreen'
-import ModalScreen from './ModalScreen';
+import HomeScreen from '../screens/HomeScreen'
+import ModalScreen from '../screens/ModalScreen';
   
 const AppNavigator = createStackNavigator(
     {
